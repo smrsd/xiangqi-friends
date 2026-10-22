@@ -1,0 +1,14 @@
+{
+  "name": "xiangqi-friends",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "start": "node scripts/dev.mjs",
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check src/game.mjs && node --check src/api.mjs && node --check public/app.js"
+  },
+  "engines": { "node": ">=24.0.0" }
+}
