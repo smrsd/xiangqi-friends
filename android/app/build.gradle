@@ -1,0 +1,31 @@
+plugins { id 'com.android.application' }
+
+def serverUrl = (providers.gradleProperty('serverUrl').orElse('https://xiangqi-friends-smrsd.thelittleprince.chatgpt.site/').get())
+if (serverUrl && !(serverUrl ==~ /^https:\/\/[^\s\/?#@]+\/?$/)) {
+    throw new GradleException('serverUrl must be an HTTPS origin, without credentials, query or path.')
+}
+def javaString = { value -> '"' + value.replace('\\', '\\\\').replace('"', '\\"') + '"' }
+
+android {
+    namespace 'io.xiangqifriends.app'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'io.xiangqifriends.app'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+        buildConfigField 'String', 'DEFAULT_SERVER_URL', javaString(serverUrl)
+    }
+    buildFeatures { buildConfig true }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Release signing is supplied by the owner or CI, never a repository key.
+        }
+    }
+}
